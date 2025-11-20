@@ -1,43 +1,30 @@
-document.addEventListener('DOMContentLoaded', () => {
+// Wait for the main window to load so the original scripts.js has finished its init
+window.addEventListener('load', () => {
+    console.log("M0NARQ System: Online");
 
-    // --- DATA SIMULATION (From your backend) ---
-    const bankData = {
-        "status": "success",
-        "doc_type": "cheque",
-        "bank": "City Bank PLC",
-        "date": "20/11/2025",
-        "payee": "Rahim Ahmed",
-        "amount_numeric": 150000,
-        "amount_words": "One Lakh Fifty Thousand Only",
-        "fraud_check": { "score": 98.5, "status": "PASS" }
-    };
+    // Ensure Anime.js is available from the original script
+    // The original script likely exposes 'anime' globally or we use standard DOM manipulation
+    
+    // --- 1. HERO COUNTER ANIMATION ---
+    const counterEl = document.getElementById('counter');
+    if (counterEl && window.anime) {
+        let obj = { val: 0 };
+        window.anime({
+            targets: obj,
+            val: 256000000,
+            round: 1,
+            easing: 'easeOutExpo',
+            duration: 3000,
+            update: function() {
+                counterEl.innerHTML = obj.val.toLocaleString();
+            }
+        });
+    }
 
-    const govData = {
-        "status": "success",
-        "doc_type": "debit_card_application",
-        "applicant": { "name": "Rahim Ahmed", "mobile": "+8801711..." },
-        "card_selection": "Platinum",
-        "intelligence": [
-            "✅ Signature matches KYC",
-            "✅ Passport valid > 6 months",
-            "ℹ️ High-value customer"
-        ]
-    };
-
-    // --- 1. HERO ANIMATION ---
-    anime({
-        targets: '#counter-docs',
-        innerHTML: [0, 256000000],
-        round: 1,
-        duration: 3000,
-        easing: 'easeOutExpo',
-        update: function(a) {
-            const value = a.animations[0].currentValue;
-            document.querySelector('#counter-docs').innerHTML = Number(value).toLocaleString();
-        }
-    });
-
-    // --- 2. SCROLL OBSERVER ---
+    // --- 2. SCROLL INTERACTION LOGIC ---
+    // This replaces the FloodAI "scroll observer" for our specific elements
+    // without breaking the site's global scroll behavior.
+    
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -47,72 +34,80 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }, { threshold: 0.5 });
 
-    document.querySelectorAll('.feature-section').forEach(section => {
-        observer.observe(section);
-    });
+    document.querySelectorAll('[data-trigger]').forEach(el => observer.observe(el));
 
-    // --- 3. DEMO ORCHESTRATOR ---
-    let currentDemo = null;
-
+    // --- 3. DEMO STATE MACHINE ---
     function activateDemo(triggerId) {
-        if (currentDemo === triggerId) return;
-        currentDemo = triggerId;
-
-        // Hide all visuals first
-        document.querySelectorAll('.doc-card').forEach(el => {
-            el.style.opacity = '0';
-            el.style.zIndex = '0';
-            el.classList.remove('active');
+        // Reset all cards
+        document.querySelectorAll('.doc-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.zIndex = '0';
+            card.classList.remove('active');
         });
 
-        // Activate current visual
-        const activeCard = document.getElementById(`visual-${triggerId}`);
+        // Activate specific card
+        const activeCard = document.getElementById(`vis-${triggerId}`);
         const activeTerm = document.getElementById(`term-${triggerId}`);
-        const activeBadge = document.getElementById(`badge-${triggerId}`);
-
+        
         if (activeCard) {
             activeCard.style.opacity = '1';
             activeCard.style.zIndex = '10';
             activeCard.classList.add('active');
             
-            // Start Terminal Sequence
-            activeTerm.style.display = 'block';
-            if (triggerId === 'bankcore') {
-                typeWriter(activeTerm, activeBadge, bankData);
-            } else if (triggerId === 'govcore') {
-                typeWriter(activeTerm, activeBadge, govData);
+            // Trigger terminal if not already running
+            if (activeTerm && activeTerm.style.display === 'none') {
+                activeTerm.style.display = 'block';
+                if (triggerId === 'cheque') runChequeSimulation(activeTerm);
+                if (triggerId === 'form') runFormSimulation(activeTerm);
             }
         }
     }
 
-    // --- 4. TYPEWRITER EFFECT ---
-    function typeWriter(element, badge, data) {
-        // Reset
-        element.innerHTML = '<span style="color: #666">// M0NARQ Engine v1.2 initialized...</span><br>';
-        badge.innerHTML = "PROCESSING";
-        badge.style.backgroundColor = "#333";
-        badge.style.color = "#fff";
-
-        const text = JSON.stringify(data, null, 2);
-        let i = 0;
-        const speed = 5; // ms per char
-
-        // Clear existing interval if any (hacky way using a custom property)
-        if (element.typeInterval) clearInterval(element.typeInterval);
-
-        element.typeInterval = setInterval(() => {
-            element.innerHTML += text.charAt(i);
-            i++;
-            element.scrollTop = element.scrollHeight; // Auto-scroll
-
-            if (i >= text.length) {
-                clearInterval(element.typeInterval);
-                // Success State
-                badge.innerHTML = "SUCCESS (140ms)";
-                badge.style.backgroundColor = "#00e5ff"; // Brand Cyan
-                badge.style.color = "#000";
-                element.innerHTML += '<br><span style="color: #00e5ff">>> DONE_</span>';
-            }
-        }, speed);
+    // --- 4. TERMINAL SIMULATIONS ---
+    
+    function runChequeSimulation(el) {
+        const log = [
+            { text: "// Ingesting image: city_bank_cheque.jpg", color: "#888" },
+            { text: ">> PaddleOCR: Bengali Text Detected", color: "#FFF" },
+            { text: "   Confidence: 98.2%", color: "#00D4FF" },
+            { text: ">> Extracting Amount...", color: "#FFF" },
+            { text: "   Numeric: 1,50,000", color: "#0F0" },
+            { text: "   Words: 'One Lakh Fifty Thousand'", color: "#0F0" },
+            { text: ">> Verifying Signature...", color: "#FFF" },
+            { text: "   MATCH CONFIRMED", color: "#00D4FF", bold: true }
+        ];
+        typeLines(el, log);
     }
+
+    function runFormSimulation(el) {
+        const log = [
+            { text: "// Scanning Layout Topology...", color: "#888" },
+            { text: ">> Document Type: DEBIT_CARD_APP", color: "#FFF" },
+            { text: ">> Field Extraction:", color: "#FFF" },
+            { text: "   Name: Rahim Ahmed", color: "#CCC" },
+            { text: "   Mobile: +8801711000...", color: "#CCC" },
+            { text: ">> Validation Checks:", color: "#FFF" },
+            { text: "   [✓] Phone Format Valid", color: "#0F0" },
+            { text: "   [✓] Mandatory Fields Present", color: "#0F0" }
+        ];
+        typeLines(el, log);
+    }
+
+    function typeLines(container, lines) {
+        container.innerHTML = ''; // Clear
+        let delay = 0;
+        
+        lines.forEach(line => {
+            setTimeout(() => {
+                const div = document.createElement('div');
+                div.style.color = line.color;
+                if (line.bold) div.style.fontWeight = 'bold';
+                div.textContent = line.text;
+                container.appendChild(div);
+                container.scrollTop = container.scrollHeight;
+            }, delay);
+            delay += 300; // Speed of typing
+        });
+    }
+
 });

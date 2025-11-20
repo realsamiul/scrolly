@@ -9,114 +9,72 @@
 
   <style>
     :root {
-      /* Brand Colors: Electric Cyan & Deep Void */
-      --hex-red-1: #00e5ff; 
-      --hex-bg-1: #050505;
-      --hex-bg-2: #0a0a0a;
-      --hex-fg-1: #ffffff;
-      --hex-fg-3: #888888;
-      
-      /* Terminal Font Override */
+      --hex-red-1: #00D4FF; /* Electric Cyan */
+      --hex-bg-1: #050505;  /* Deep Black */
       --font-code: 'Courier New', monospace;
     }
-
-    body { background-color: var(--hex-bg-1); }
     
-    /* The Terminal Window for Demos */
+    /* Ensure sticky sections work with the original layout engine */
+    body[data-template="monarq"] .home-section {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    /* Terminal Window */
     .monarq-terminal {
       background: rgba(10, 10, 10, 0.95);
       border: 1px solid #333;
       border-left: 3px solid var(--hex-red-1);
-      border-radius: 6px;
       padding: 1.5rem;
       font-family: var(--font-code);
-      font-size: 0.85rem;
-      color: #00e5ff;
-      min-height: 280px;
+      color: #00D4FF;
+      min-height: 300px;
       box-shadow: 0 20px 50px rgba(0,0,0,0.8);
-      overflow: hidden;
       white-space: pre-wrap;
+      font-size: 0.85rem;
       position: relative;
     }
-
-    /* Scanline effect for terminal */
-    .monarq-terminal::after {
-      content: " ";
-      display: block;
-      position: absolute;
-      top: 0; left: 0; bottom: 0; right: 0;
-      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-      z-index: 2;
-      background-size: 100% 2px, 3px 100%;
-      pointer-events: none;
-    }
-
-    /* Document Preview Card */
+    
+    /* Document Card */
     .doc-card {
-      background: white;
+      background: #fff;
       border-radius: 8px;
       overflow: hidden;
-      box-shadow: 0 0 0 1px #333, 0 20px 40px rgba(0,0,0,0.5);
-      transform: perspective(1000px) rotateY(-5deg) rotateX(5deg);
-      transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+      transform: perspective(1000px) rotateY(-5deg);
+      transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
       opacity: 0.4;
       filter: grayscale(100%);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
     }
-
     .doc-card.active {
-      transform: perspective(1000px) rotateY(0deg) rotateX(0deg) scale(1.05);
+      transform: perspective(1000px) rotateY(0deg) scale(1.05);
       opacity: 1;
       filter: grayscale(0%);
-      box-shadow: 0 0 0 1px var(--hex-red-1), 0 30px 60px rgba(0, 229, 255, 0.1);
+      box-shadow: 0 0 0 2px var(--hex-red-1), 0 40px 80px rgba(0, 212, 255, 0.15);
     }
 
-    /* Floating Badge */
+    /* Badge */
     .status-badge {
-      position: absolute;
-      top: -10px;
-      right: 20px;
-      background: var(--hex-red-1);
-      color: #000;
-      font-weight: bold;
-      padding: 4px 12px;
-      font-size: 0.7rem;
-      border-radius: 4px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      z-index: 10;
-      box-shadow: 0 0 15px var(--hex-red-1);
-    }
-
-    /* Grid Background Overlay */
-    .noir-grid {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background-image: 
-        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-      background-size: 50px 50px;
-      pointer-events: none;
-      z-index: -1;
+      position: absolute; top: 10px; right: 10px;
+      padding: 4px 8px; background: #000; color: #fff;
+      font-size: 10px; font-weight: bold; letter-spacing: 1px;
     }
   </style>
 </head>
-<body data-template="home">
-  
-  <div class="noir-grid"></div>
 
+<body data-template="monarq">
+  
   <header id="site-header">
     <div class="layout-container" id="site-header-content">
-      <h1 class="heading-logo header-logo">
-        <a href="/">
-          <span style="font-size: 1.5rem; font-weight: 900; letter-spacing: -0.05em;">M0NARQ</span>
-        </a>
+      <h1 class="heading-logo">
+        <a href="/"><span style="font-weight:900; font-size:1.5rem;">M0NARQ</span></a>
       </h1>
       <nav id="site-menu">
         <ul>
           <li><a class="main-nav-link" href="#intro">Vision</a></li>
-          <li><a class="main-nav-link" href="#bankcore">BankCore</a></li>
-          <li><a class="main-nav-link" href="#govcore">GovCore</a></li>
-          <li><a class="main-nav-link" href="#stack">Architecture</a></li>
+          <li><a class="main-nav-link" href="#demo">Live Demo</a></li>
         </ul>
       </nav>
     </div>
@@ -126,103 +84,63 @@
     
     <section id="intro" class="home-section text-layout">
       <div class="home-section-content">
-        <div class="home-section-text home-section-text-short">
-          <h2 style="font-size: 4rem; line-height: 0.9;">The Nervous System<br>of Digital Bangladesh<span style="color: var(--hex-red-1)">.</span></h2>
-          <p style="margin-top: 2rem; font-size: 1.25rem; color: var(--hex-fg-3);">
-            Processing <span id="counter-docs" style="color: #fff; font-family: var(--font-code);">0</span> documents per year.
-            <br>
-            <span style="color: var(--hex-red-1)">Tk 32,000 Crore</span> productivity unlocked.
-          </p>
+        <div class="home-section-text">
+          <h2 class="text-xxxxl">Digital Nervous System<br>for <span style="color:var(--hex-red-1)">Bangladesh</span></h2>
+          <p>Processing <span id="counter">0</span> documents annually.</p>
         </div>
       </div>
     </section>
 
-    <section id="toolbox" class="home-section-container" style="background: transparent;">
+    <section id="demo" class="home-section-container" style="position: relative;">
       
       <div class="home-section fixed-section" style="pointer-events: none;">
         <div class="home-section-content" style="display: flex; align-items: center; justify-content: flex-end;">
-          
-          <div style="width: 50%; max-width: 600px; position: relative;">
+          <div style="width: 45%; position: relative;">
             
-            <div id="visual-bankcore" class="doc-card" style="position: absolute; top: 0; left: 0; width: 100%;">
-              <div class="status-badge" id="badge-bankcore">IDLE</div>
-              <img src="https://placehold.co/800x400/EEE/333?text=City+Bank+Cheque" style="width: 100%; display: block;">
-              <div class="monarq-terminal" id="term-bankcore" style="margin-top: 1rem; display: none;">
-                <span class="cursor">_</span>
-              </div>
+            <div id="vis-cheque" class="doc-card" style="position: absolute; width: 100%;">
+              <div class="status-badge">BANKCORE</div>
+              <img src="https://placehold.co/600x300/111/FFF?text=Cheque+Scanning..." style="width:100%">
+              <div class="monarq-terminal" id="term-cheque" style="display:none; margin-top:1rem;"></div>
             </div>
 
-            <div id="visual-govcore" class="doc-card" style="position: absolute; top: 0; left: 0; width: 100%; opacity: 0;">
-              <div class="status-badge" id="badge-govcore">IDLE</div>
-              <img src="https://placehold.co/600x800/EEE/333?text=Debit+Card+Application" style="width: 100%; display: block;">
-              <div class="monarq-terminal" id="term-govcore" style="margin-top: 1rem; display: none;">
-                <span class="cursor">_</span>
-              </div>
+            <div id="vis-form" class="doc-card" style="position: absolute; width: 100%; opacity: 0;">
+              <div class="status-badge">GOVCORE</div>
+              <img src="https://placehold.co/500x700/111/FFF?text=Form+Extraction..." style="width:100%">
+              <div class="monarq-terminal" id="term-form" style="display:none; margin-top:1rem;"></div>
             </div>
 
           </div>
         </div>
       </div>
 
-      <section id="bankcore" class="home-section feature-section text-layout" data-trigger="bankcore">
-        <div class="home-section-content">
-          <div class="home-section-text">
-            <div class="home-section-text-heading">
+      <div style="position: relative; z-index: 2;">
+        
+        <section id="step-cheque" class="home-section feature-section text-layout" data-trigger="cheque">
+          <div class="home-section-content">
+            <div class="home-section-text">
               <h2>BankCore Alpha</h2>
-              <p>97% Accuracy on Bengali Handwriting.</p>
+              <p>PaddleOCR + Gemini Flash processing 97% accurate Bengali handwriting.</p>
             </div>
-            <ul class="links-list">
-              <li><a class="text-ui"><span style="color: var(--hex-red-1)">●</span> Cheque Processing</a></li>
-              <li><a class="text-ui"><span style="color: var(--hex-red-1)">●</span> Signature Verification</a></li>
-              <li><a class="text-ui"><span style="color: var(--hex-red-1)">●</span> Fraud Detection</a></li>
-            </ul>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section id="govcore" class="home-section feature-section text-layout" data-trigger="govcore">
-        <div class="home-section-content">
-          <div class="home-section-text">
-            <div class="home-section-text-heading">
+        <section id="step-form" class="home-section feature-section text-layout" data-trigger="form">
+          <div class="home-section-content">
+            <div class="home-section-text">
               <h2>GovCore Extraction</h2>
-              <p>Understanding complex layouts, checkboxes, and mixed scripts.</p>
-            </div>
-            <ul class="links-list">
-              <li><a class="text-ui"><span style="color: var(--hex-red-1)">●</span> NID & Passports</a></li>
-              <li><a class="text-ui"><span style="color: var(--hex-red-1)">●</span> Land Deeds (Dalil)</a></li>
-              <li><a class="text-ui"><span style="color: var(--hex-red-1)">●</span> Application Forms</a></li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <div class="section-spacer"></div>
-    </section>
-
-    <section id="stack" class="home-section text-layout">
-      <div class="home-section-content">
-        <div class="home-section-text">
-          <h2 class="text-xxl">The Hybrid Stack</h2>
-          <p>Why we win against AWS & Google.</p>
-          <br>
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
-            <div>
-              <h3 style="color: var(--hex-red-1)">Local OCR Layer</h3>
-              <p class="text-s" style="color: #888">PaddleOCR fine-tuned on 1.8M Bengali lines. Runs on-prem. Zero latency.</p>
-            </div>
-            <div>
-              <h3 style="color: var(--hex-red-1)">Cognitive Layer</h3>
-              <p class="text-s" style="color: #888">Gemini 2.0 Flash for reasoning (fraud detection, logical validation).</p>
+              <p>Complex layout parsing for Deeds, NIDs, and Application Forms.</p>
             </div>
           </div>
-        </div>
+        </section>
+
       </div>
     </section>
 
   </main>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
-  <script src="monarq-logic.js"></script>
+  <script src="assets/js/scripts.js?v=4.1.2"></script>
+  
+  <script src="assets/js/monarq-logic.js"></script>
 
 </body>
 </html>

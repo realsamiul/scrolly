@@ -3,525 +3,226 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="darkreader-lock">
-  <link rel="icon" href="/assets/images/favicon.png">
-  <title>FloodAI | Geospatial Intelligence for Bangladesh</title>
-  <meta name="description" content="AI-powered flood prediction using Sentinel-2 satellite imagery">
-  <meta property="og:title" content="FloodAI | Geospatial Intelligence for Bangladesh">
-  <meta property="og:url" content="/">
-  <meta property="og:description" content="AI-powered flood prediction using Sentinel-2 satellite imagery">
+  <title>M0NARQ | The Nervous System of Digital Bangladesh</title>
   
-  <link rel="stylesheet" href="asset/assets/css/styles.css%3Fv=4.1.2">
+  <link rel="stylesheet" href="assets/css/styles.css?v=4.1.2.css">
+
+  <style>
+    :root {
+      /* Brand Colors: Electric Cyan & Deep Void */
+      --hex-red-1: #00e5ff; 
+      --hex-bg-1: #050505;
+      --hex-bg-2: #0a0a0a;
+      --hex-fg-1: #ffffff;
+      --hex-fg-3: #888888;
+      
+      /* Terminal Font Override */
+      --font-code: 'Courier New', monospace;
+    }
+
+    body { background-color: var(--hex-bg-1); }
+    
+    /* The Terminal Window for Demos */
+    .monarq-terminal {
+      background: rgba(10, 10, 10, 0.95);
+      border: 1px solid #333;
+      border-left: 3px solid var(--hex-red-1);
+      border-radius: 6px;
+      padding: 1.5rem;
+      font-family: var(--font-code);
+      font-size: 0.85rem;
+      color: #00e5ff;
+      min-height: 280px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+      overflow: hidden;
+      white-space: pre-wrap;
+      position: relative;
+    }
+
+    /* Scanline effect for terminal */
+    .monarq-terminal::after {
+      content: " ";
+      display: block;
+      position: absolute;
+      top: 0; left: 0; bottom: 0; right: 0;
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+      z-index: 2;
+      background-size: 100% 2px, 3px 100%;
+      pointer-events: none;
+    }
+
+    /* Document Preview Card */
+    .doc-card {
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 0 0 1px #333, 0 20px 40px rgba(0,0,0,0.5);
+      transform: perspective(1000px) rotateY(-5deg) rotateX(5deg);
+      transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+      opacity: 0.4;
+      filter: grayscale(100%);
+    }
+
+    .doc-card.active {
+      transform: perspective(1000px) rotateY(0deg) rotateX(0deg) scale(1.05);
+      opacity: 1;
+      filter: grayscale(0%);
+      box-shadow: 0 0 0 1px var(--hex-red-1), 0 30px 60px rgba(0, 229, 255, 0.1);
+    }
+
+    /* Floating Badge */
+    .status-badge {
+      position: absolute;
+      top: -10px;
+      right: 20px;
+      background: var(--hex-red-1);
+      color: #000;
+      font-weight: bold;
+      padding: 4px 12px;
+      font-size: 0.7rem;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      z-index: 10;
+      box-shadow: 0 0 15px var(--hex-red-1);
+    }
+
+    /* Grid Background Overlay */
+    .noir-grid {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 50px 50px;
+      pointer-events: none;
+      z-index: -1;
+    }
+  </style>
 </head>
 <body data-template="home">
-  <div class="scroll-cursor"></div>
-  <div class="scroll-cursor-ghost scroll-cursor"></div>
   
+  <div class="noir-grid"></div>
+
   <header id="site-header">
     <div class="layout-container" id="site-header-content">
       <h1 class="heading-logo header-logo">
         <a href="/">
-          <img src="https://animejs.com/assets/images/anime-js-logo-v4.svg" alt="FloodAI logo" width="580" height="118" />
-          <span>FloodAI | Geospatial Intelligence</span>
+          <span style="font-size: 1.5rem; font-weight: 900; letter-spacing: -0.05em;">M0NARQ</span>
         </a>
       </h1>
-      
       <nav id="site-menu">
         <ul>
-          <li><a class="main-nav-link" href="#intro" title="Home">Home</a></li>
-          <li><a class="main-nav-link" href="#toolbox" title="Platform">Platform</a></li>
-          <li><a class="main-nav-link" href="#features-gallery" title="Technology">Technology</a></li>
-          <li><a class="main-nav-link" href="#sponsors" title="Partners">Partners</a></li>
-          <li><a class="main-nav-link" href="https://floodai.com/docs" title="Documentation">Docs</a></li>
+          <li><a class="main-nav-link" href="#intro">Vision</a></li>
+          <li><a class="main-nav-link" href="#bankcore">BankCore</a></li>
+          <li><a class="main-nav-link" href="#govcore">GovCore</a></li>
+          <li><a class="main-nav-link" href="#stack">Architecture</a></li>
         </ul>
       </nav>
-      
-      <div class="heading-links">
-        <div class="layout-container">
-          <div class="ui-group">
-            <pre class="npm-install"><code>pip install floodai</code></pre>
-            <button class="learn-more ui-input ui-button">Learn more 
-              <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" class="icon">
-                <g fill="none" fill-rule="evenodd">
-                  <polygon fill="currentColor" fill-rule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
-                </g>
-              </svg>
-            </button>
-          </div>
-        </div>
-      </div>
     </div>
   </header>
   
   <main id="home" class="layout-container">
-    <section id="intro" data-chapter="intro" data-label="HEADING">
-      <div class="home-section text-layout">
-        <div class="home-section-content">
-          <div class="home-section-text home-section-text-short">
-            <h2>AI-powered flood <br>prediction for <br>Bangladesh<span class="animation-engine red-dot">.</span></h2>
-            <p>A fast and versatile geospatial intelligence platform to predict <span class="animate-anything-wrapper"><span class="animate-anything">flooding</span><span class="animate-anything-dot">.</span></span></p>
-          </div>
+    
+    <section id="intro" class="home-section text-layout">
+      <div class="home-section-content">
+        <div class="home-section-text home-section-text-short">
+          <h2 style="font-size: 4rem; line-height: 0.9;">The Nervous System<br>of Digital Bangladesh<span style="color: var(--hex-red-1)">.</span></h2>
+          <p style="margin-top: 2rem; font-size: 1.25rem; color: var(--hex-fg-3);">
+            Processing <span id="counter-docs" style="color: #fff; font-family: var(--font-code);">0</span> documents per year.
+            <br>
+            <span style="color: var(--hex-red-1)">Tk 32,000 Crore</span> productivity unlocked.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="toolbox" class="home-section-container" style="background: transparent;">
+      
+      <div class="home-section fixed-section" style="pointer-events: none;">
+        <div class="home-section-content" style="display: flex; align-items: center; justify-content: flex-end;">
           
-          <div class="fixed-container heading-links">
-            <div class="layout-container">
-              <div class="ui-group">
-                <pre class="npm-install"><code>pip install floodai</code></pre>
-                <button class="learn-more ui-input ui-button">Learn more 
-                  <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" class="icon">
-                    <g fill="none" fill-rule="evenodd">
-                      <polygon fill="currentColor" fill-rule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
-                    </g>
-                  </svg>
-                </button>
+          <div style="width: 50%; max-width: 600px; position: relative;">
+            
+            <div id="visual-bankcore" class="doc-card" style="position: absolute; top: 0; left: 0; width: 100%;">
+              <div class="status-badge" id="badge-bankcore">IDLE</div>
+              <img src="https://placehold.co/800x400/EEE/333?text=City+Bank+Cheque" style="width: 100%; display: block;">
+              <div class="monarq-terminal" id="term-bankcore" style="margin-top: 1rem; display: none;">
+                <span class="cursor">_</span>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    
-    <section class="home-section-container">
-      <div class="home-section fixed-section">
-        <div class="home-section-content">
-          <div class="home-section-text text-layout home-section-text-short">
-            <h2 class="section-heading text-xxl">Sentinel-2 <br>satellite intelligence</h2>
-            <p class="section-sub-heading">Break free from traditional flood monitoring limitations with AI-powered satellite analysis.</p>
-          </div>
-        </div>
-      </div>
-      <div class="section-spacer"></div>
-      <div class="section-spacer"></div>
-      <div class="section-spacer"></div>
-      <div class="section-spacer"></div>
-    </section>
-    
-    <section id="toolbox" class="home-section-container home-section-light" data-chapter="toolbox" data-label="TOOLBOX" data-enter-offset="-=100lvh" data-leave-offset="-=10lvh">
-      <div class="home-section fixed-section">
-        <div class="home-section-content">
-          <div class="home-section-text text-layout home-section-text-short">
-            <h2 class="section-heading text-xxl">The complete <br>flood prediction platform</h2>
-            <p class="section-sub-heading">Break free from weather limitations and predict floods anywhere in Bangladesh with a single AI platform.</p>
-          </div>
-          <div class="toolbox-labels-container layout-container">
-            <div class="toolbox-labels">
-              <ul class="toolbox-labels-left"></ul>
-              <ul class="toolbox-labels-right"></ul>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="section-spacer"></div>
-      <div class="section-spacer"></div>
-      <div class="section-spacer"></div>
-      <div class="section-spacer"></div>
-    </section>
-    
-    <section id="features-gallery" data-label="FEATURES">
-      <section id="intuitive" class="home-section feature-section text-layout theme-color-getting-started" data-chapter="intuitive" data-demo="intuitive">
-        <div class="home-section-content">
-          <div class="home-section-text">
-            <div class="home-section-text-heading">
-              <h2>Satellite data pipeline</h2>
-              <p>Process Sentinel-2 imagery faster with an easy-to-use, yet powerful data processing API.</p>
-            </div>
-            <ul class="links-list">
-              <li><a class="text-ui" href="#">
-                <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" class="icon">
-                  <g fill="none" fill-rule="evenodd">
-                    <polygon fill="currentColor" fill-rule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
-                  </g>
-                </svg>
-                Real-time data ingestion
-              </a></li>
-              <li><a class="text-ui" href="#">
-                <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" class="icon">
-                  <g fill="none" fill-rule="evenodd">
-                    <polygon fill="currentColor" fill-rule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
-                  </g>
-                </svg>
-                Cloud detection algorithms
-              </a></li>
-              <li><a class="text-ui" href="#">
-                <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" class="icon">
-                  <g fill="none" fill-rule="evenodd">
-                    <polygon fill="currentColor" fill-rule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
-                  </g>
-                </svg>
-                Atmospheric correction
-              </a></li>
-            </ul>
-          </div>
-          <div class="feature-section-demo-wrapper">
-            <div class="feature-section-demo fixed-section"></div>
-          </div>
-        </div>
-      </section>
-      
-      <section id="composition" class="home-section feature-section text-layout theme-color-animation" data-chapter="composition" data-demo="composition">
-        <div class="home-section-content">
-          <div class="home-section-text">
-            <div class="home-section-text-heading">
-              <h2>Deep learning models</h2>
-              <p>Smoothly blend individual satellite bands with our transformer and ResNet architecture for flood detection.</p>
-            </div>
-            <ul class="links-list">
-              <li><a class="text-ui" href="#">
-                <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" class="icon">
-                  <g fill="none" fill-rule="evenodd">
-                    <polygon fill="currentColor" fill-rule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
-                  </g>
-                </svg>
-                Individual band processing
-              </a></li>
-              <li><a class="text-ui" href="#">
-                <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" class="icon">
-                  <g fill="none" fill-rule="evenodd">
-                    <polygon fill="currentColor" fill-rule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
-                  </g>
-                </svg>
-                Spectral index fusion
-              </a></li>
-            </ul>
-          </div>
-          <div class="feature-section-demo-wrapper">
-            <div class="feature-section-demo fixed-section"></div>
-          </div>
-        </div>
-      </section>
-      
-      <section id="svgUtils" class="home-section feature-section text-layout theme-color-svg" data-chapter="svgUtils" data-demo="svgUtils">
-        <div class="home-section-content">
-          <div class="home-section-text">
-            <div class="home-section-text-heading">
-              <h2>Flood mapping tools</h2>
-              <p>Morph shapes, follow water boundaries, and draw flood contours easily with our built-in geospatial utilities.</p>
-            </div>
-            <ul class="links-list">
-              <li><a class="text-ui" href="#">
-                <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" class="icon">
-                  <g fill="none" fill-rule="evenodd">
-                    <polygon fill="currentColor" fill-rule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
-                  </g>
-                </svg>
-                Morph flood boundaries
-              </a></li>
-              <li><a class="text-ui" href="#">
-                <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" class="icon">
-                  <g fill="none" fill-rule="evenodd">
-                    <polygon fill="currentColor" fill-rule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
-                  </g>
-                </svg>
-                Water body detection
-              </a></li>
-            </ul>
-          </div>
-          <div class="feature-section-demo-wrapper">
-            <div class="feature-section-demo fixed-section"></div>
-          </div>
-        </div>
-      </section>
-      
-      <section id="scroll" class="home-section feature-section text-layout theme-color-events" data-chapter="scroll" data-demo="scroll">
-        <div class="home-section-content">
-          <div class="home-section-text">
-            <div class="home-section-text-heading">
-              <h2>Real-time monitoring</h2>
-              <p>Synchronize and trigger flood alerts on satellite passes with our Sentinel Observer API.</p>
-            </div>
-            <ul class="links-list">
-              <li><a class="text-ui" href="#">
-                <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" class="icon">
-                  <g fill="none" fill-rule="evenodd">
-                    <polygon fill="currentColor" fill-rule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
-                  </g>
-                </svg>
-                Automated alert system
-              </a></li>
-              <li><a class="text-ui" href="#">
-                <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" class="icon">
-                  <g fill="none" fill-rule="evenodd">
-                    <polygon fill="currentColor" fill-rule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
-                  </g>
-                </svg>
-                Complete set of callbacks
-              </a></li>
-            </ul>
-          </div>
-          <div class="feature-section-demo-wrapper">
-            <div class="feature-section-demo fixed-section"></div>
-          </div>
-        </div>
-      </section>
-      
-      <section id="staggering" class="home-section feature-section text-layout theme-color-utils" data-chapter="staggering" data-demo="staggering">
-        <div class="home-section-content">
-          <div class="home-section-text">
-            <div class="home-section-text-heading">
-              <h2>Risk assessment models</h2>
-              <p>Create stunning flood risk visualizations in seconds with our built-in Stagger utility function.</p>
-            </div>
-            <ul class="links-list">
-              <li><a class="text-ui" href="#">
-                <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" class="icon">
-                  <g fill="none" fill-rule="evenodd">
-                    <polygon fill="currentColor" fill-rule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
-                  </g>
-                </svg>
-                Time-based risk staggering
-              </a></li>
-              <li><a class="text-ui" href="#">
-                <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" class="icon">
-                  <g fill="none" fill-rule="evenodd">
-                    <polygon fill="currentColor" fill-rule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
-                  </g>
-                </svg>
-                Population exposure mapping
-              </a></li>
-            </ul>
-          </div>
-          <div class="feature-section-demo-wrapper">
-            <div class="feature-section-demo fixed-section"></div>
-          </div>
-        </div>
-      </section>
-      
-      <section id="draggable" class="home-section feature-section text-layout theme-color-5" data-chapter="draggable" data-demo="draggable">
-        <div class="home-section-content">
-          <div class="home-section-text">
-            <div class="home-section-text-heading">
-              <h2>Interactive flood simulations</h2>
-              <p>Drag, snap, flick and throw flood scenarios with our fully-featured Draggable API.</p>
-            </div>
-            <ul class="links-list">
-              <li><a class="text-ui" href="#">
-                <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" class="icon">
-                  <g fill="none" fill-rule="evenodd">
-                    <polygon fill="currentColor" fill-rule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
-                  </g>
-                </svg>
-                Comprehensive callbacks
-              </a></li>
-              <li><a class="text-ui" href="#">
-                <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" class="icon">
-                  <g fill="none" fill-rule="evenodd">
-                    <polygon fill="currentColor" fill-rule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
-                  </g>
-                </svg>
-                Useful methods
-              </a></li>
-            </ul>
-          </div>
-          <div class="feature-section-demo-wrapper">
-            <div id="draggable-demo" class="feature-section-demo">
-              <div class="draggable-container">
-                <div class="draggable"></div>
+
+            <div id="visual-govcore" class="doc-card" style="position: absolute; top: 0; left: 0; width: 100%; opacity: 0;">
+              <div class="status-badge" id="badge-govcore">IDLE</div>
+              <img src="https://placehold.co/600x800/EEE/333?text=Debit+Card+Application" style="width: 100%; display: block;">
+              <div class="monarq-terminal" id="term-govcore" style="margin-top: 1rem; display: none;">
+                <span class="cursor">_</span>
               </div>
             </div>
+
           </div>
         </div>
-      </section>
-      
-      <section id="clockwork" class="home-section feature-section text-layout theme-color-timeline" data-chapter="clockwork" data-demo="clockwork">
+      </div>
+
+      <section id="bankcore" class="home-section feature-section text-layout" data-trigger="bankcore">
         <div class="home-section-content">
           <div class="home-section-text">
             <div class="home-section-text-heading">
-              <h2>Predictive analytics engine</h2>
-              <p>Orchestrate flood prediction sequences and keep alerts in sync with our powerful Timeline API.</p>
+              <h2>BankCore Alpha</h2>
+              <p>97% Accuracy on Bengali Handwriting.</p>
             </div>
             <ul class="links-list">
-              <li><a class="text-ui" href="#">
-                <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" class="icon">
-                  <g fill="none" fill-rule="evenodd">
-                    <polygon fill="currentColor" fill-rule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
-                  </g>
-                </svg>
-                Synchronize predictions
-              </a></li>
-              <li><a class="text-ui" href="#">
-                <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" class="icon">
-                  <g fill="none" fill-rule="evenodd">
-                    <polygon fill="currentColor" fill-rule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
-                  </g>
-                </svg>
-                Advanced time positions
-              </a></li>
+              <li><a class="text-ui"><span style="color: var(--hex-red-1)">●</span> Cheque Processing</a></li>
+              <li><a class="text-ui"><span style="color: var(--hex-red-1)">●</span> Signature Verification</a></li>
+              <li><a class="text-ui"><span style="color: var(--hex-red-1)">●</span> Fraud Detection</a></li>
             </ul>
-          </div>
-          <div class="feature-section-demo-wrapper">
-            <div class="feature-section-demo"><div class="clock"><div class="tick mark"></div><div class="tick number"></div><div class="tick number"></div><div class="tick number"></div><div class="tick number"></div><div class="tick number"></div><div class="tick number"></div><div class="tick number"></div><div class="tick number"></div><div class="tick number"></div><div class="tick number"></div><div class="tick number"></div></div></div>
           </div>
         </div>
       </section>
-      
-      <section id="responsive" class="home-section feature-section text-layout theme-color-scope" data-chapter="responsive" data-demo="responsive">
+
+      <section id="govcore" class="home-section feature-section text-layout" data-trigger="govcore">
         <div class="home-section-content">
           <div class="home-section-text">
             <div class="home-section-text-heading">
-              <h2>Adaptive flood modeling</h2>
-              <p>Make flood predictions respond to climate conditions easily with our Scope API.</p>
+              <h2>GovCore Extraction</h2>
+              <p>Understanding complex layouts, checkboxes, and mixed scripts.</p>
             </div>
             <ul class="links-list">
-              <li><a class="text-ui" href="#">
-                <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" class="icon">
-                  <g fill="none" fill-rule="evenodd">
-                    <polygon fill="currentColor" fill-rule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
-                  </g>
-                </svg>
-                Climate condition media queries
-              </a></li>
-              <li><a class="text-ui" href="#">
-                <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" class="icon">
-                  <g fill="none" fill-rule="evenodd">
-                    <polygon fill="currentColor" fill-rule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
-                  </g>
-                </svg>
-                Monsoon season adjustments
-              </a></li>
+              <li><a class="text-ui"><span style="color: var(--hex-red-1)">●</span> NID & Passports</a></li>
+              <li><a class="text-ui"><span style="color: var(--hex-red-1)">●</span> Land Deeds (Dalil)</a></li>
+              <li><a class="text-ui"><span style="color: var(--hex-red-1)">●</span> Application Forms</a></li>
             </ul>
           </div>
-          <div class="feature-section-demo-wrapper">
-            <div class="feature-section-demo fixed-section"></div>
-          </div>
         </div>
       </section>
-      
-      <section id="bangladesh-cities" class="home-section feature-section text-layout theme-color-getting-started" data-chapter="bangladesh-cities" data-demo="bangladesh-cities">
-        <div class="home-section-content">
-          <div class="home-section-text">
-            <div class="home-section-text-heading">
-              <h2>Urban flood mapping</h2>
-              <p>High-resolution flood modeling for Bangladesh's most vulnerable cities using Sentinel-2's 10m spatial resolution.</p>
-            </div>
-            <ul class="links-list">
-              <li><a class="text-ui" href="#">
-                <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" class="icon">
-                  <g fill="none" fill-rule="evenodd">
-                    <polygon fill="currentColor" fill-rule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
-                  </g>
-                </svg>
-                Dhaka flood vulnerability
-              </a></li>
-              <li><a class="text-ui" href="#">
-                <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" class="icon">
-                  <g fill="none" fill-rule="evenodd">
-                    <polygon fill="currentColor" fill-rule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
-                  </g>
-                </svg>
-                Sylhet water body detection
-              </a></li>
-            </ul>
-          </div>
-          <div class="feature-section-demo-wrapper">
-            <div class="feature-section-demo fixed-section"></div>
-          </div>
-        </div>
-      </section>
-      
-      <section id="model-training" class="home-section feature-section text-layout theme-color-animation" data-chapter="model-training" data-demo="model-training">
-        <div class="home-section-content">
-          <div class="home-section-text">
-            <div class="home-section-text-heading">
-              <h2>Transformer architecture</h2>
-              <p>Advanced transformer models trained on historical Sentinel-2 flood events to predict future inundation patterns.</p>
-            </div>
-            <ul class="links-list">
-              <li><a class="text-ui" href="#">
-                <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" class="icon">
-                  <g fill="none" fill-rule="evenodd">
-                    <polygon fill="currentColor" fill-rule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
-                  </g>
-                </svg>
-                Self-attention mechanisms
-              </a></li>
-              <li><a class="text-ui" href="#">
-                <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" class="icon">
-                  <g fill="none" fill-rule="evenodd">
-                    <polygon fill="currentColor" fill-rule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
-                  </g>
-                </svg>
-                ResNet feature extraction
-              </a></li>
-            </ul>
-          </div>
-          <div class="feature-section-demo-wrapper">
-            <div class="feature-section-demo fixed-section"></div>
-          </div>
-        </div>
-      </section>
-      
-      <section id="sponsors" class="home-section text-layout" data-chapter="sponsors" data-label="SPONSORS">
-        <div class="home-section-content">
-          <div class="home-section-text">
-            <h2 class="text-xxxl">Our partners</h2>
-            <p>Collaborating with research institutions and government agencies to protect Bangladesh from flooding.</p>
-          </div>
-          <div class="sponsors-list" path="platinum-sponsors"></div>
-        </div>
-      </section>
-      
-      <section id="get-started" class="home-section text-layout" data-chapter="get-started" data-label="GET STARTED">
-        <div class="home-section-content">
-          <div class="home-section-text">
-            <h2 class="text-xxxl">Start predicting floods</h2>
-            <p>Get started quickly with our in-depth documentation and API.</p>
-          </div>
-          <ul class="docs-chapters-list">
-            <li><a class="text-ui docs-info-link" href="#">
-              <span class="label-dot"></span>
-              <span class="label-text">Getting started
-                <span class="link-arrow">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" class="icon">
-                    <g fill="none" fill-rule="evenodd">
-                      <polygon fill="currentColor" fill-rule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
-                    </g>
-                  </svg>
-                </span>
-              </span>
-            </a></li>
-            <li><a class="text-ui docs-info-link" href="#">
-              <span class="label-dot"></span>
-              <span class="label-text">Satellite data integration
-                <span class="link-arrow">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" class="icon">
-                    <g fill="none" fill-rule="evenodd">
-                      <polygon fill="currentColor" fill-rule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
-                    </g>
-                  </svg>
-                </span>
-              </span>
-            </a></li>
-            <li><a class="text-ui docs-info-link" href="#">
-              <span class="label-dot"></span>
-              <span class="label-text">Flood prediction models
-                <span class="link-arrow">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" class="icon">
-                    <g fill="none" fill-rule="evenodd">
-                      <polygon fill="currentColor" fill-rule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
-                    </g>
-                  </svg>
-                </span>
-              </span>
-            </a></li>
-          </ul>
-        </div>
-      </section>
+
+      <div class="section-spacer"></div>
     </section>
+
+    <section id="stack" class="home-section text-layout">
+      <div class="home-section-content">
+        <div class="home-section-text">
+          <h2 class="text-xxl">The Hybrid Stack</h2>
+          <p>Why we win against AWS & Google.</p>
+          <br>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+            <div>
+              <h3 style="color: var(--hex-red-1)">Local OCR Layer</h3>
+              <p class="text-s" style="color: #888">PaddleOCR fine-tuned on 1.8M Bengali lines. Runs on-prem. Zero latency.</p>
+            </div>
+            <div>
+              <h3 style="color: var(--hex-red-1)">Cognitive Layer</h3>
+              <p class="text-s" style="color: #888">Gemini 2.0 Flash for reasoning (fraud detection, logical validation).</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </main>
-  
-  <footer class="layout-container">
-    <div class="footer-block footer-logo-block">
-      <div class="heading-logo footer-logo">
-        <a href="/">
-          <img src="https://animejs.com/assets/images/anime-js-logo-v4.svg" alt="FloodAI logo" width="580" height="118" />
-          <span>FloodAI | Geospatial Intelligence</span>
-        </a>
-      </div>
-      <div class="footer-copyright">&copy; 2025 FloodAI. All rights reserved.</div>
-    </div>
-  </footer>
-  
-  <div id="engine"></div>
-  
-  <script src="asset/assets/js/scripts.js%3Fv=4.1.2"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <script src="monarq-logic.js"></script>
+
 </body>
 </html>

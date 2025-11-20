@@ -3,160 +3,514 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="darkreader-lock">
+  <link rel="icon" href="assets/images/favicon.png">
   <title>M0NARQ | The Nervous System of Digital Bangladesh</title>
   
-  <link rel="stylesheet" href="assets/css/styles.css?v=4.1.2.css">
-
+  <link href="assets/css/styles.css?v=4.1.2.css" rel="stylesheet">
+  
   <style>
+    /* Override original anime.js colors with M0NARQ cyan */
     :root {
-      --hex-red-1: #00D4FF; /* Cyan Accent */
-      --hex-bg-1: #050505;  /* Deep Black */
-      --font-code: 'Courier New', monospace;
+      --hex-red-1: #00D4FF !important;
+      --rgb-red-1: 0, 212, 255 !important;
+      --hex-red-2: #0099CC !important;
+      --hex-red-3: #0A3A4A !important;
+      --hex-red-4: #051F28 !important;
+      --hex-red-5: #0D4A5A !important;
     }
     
-    /* Fix layout inside the .page wrapper */
-    .page {
-      width: 100%;
-      overflow-x: hidden;
-    }
-
-    /* Terminal Window Styling */
-    .monarq-terminal {
-      background: rgba(10, 10, 10, 0.95);
-      border: 1px solid #333;
-      border-left: 3px solid var(--hex-red-1);
-      padding: 1.5rem;
-      font-family: var(--font-code);
-      color: #00D4FF;
-      min-height: 300px;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.8);
-      white-space: pre-wrap;
-      font-size: 0.85rem;
-      position: relative;
-      margin-top: 1.5rem;
+    /* Make page visible immediately - override anime.js fade-in */
+    body[data-template=home] .page {
+      opacity: 1 !important;
     }
     
-    /* Card 3D Effect */
+    /* Fix fixed-section visibility */
+    .fixed-section {
+      opacity: 1 !important;
+      pointer-events: auto !important;
+    }
+    
+    /* Card container setup */
+    .feature-section-demo-wrapper {
+      pointer-events: auto !important;
+    }
+    
     .doc-card {
-      background: #fff;
-      border-radius: 8px;
-      overflow: hidden;
-      transform: perspective(1000px) rotateY(-5deg);
-      transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
-      opacity: 0.4;
-      filter: grayscale(100%);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
       position: absolute;
-      top: 0; left: 0; width: 100%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) perspective(1000px) rotateY(-10deg) scale(0.9);
+      width: 90%;
+      max-width: 500px;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+      opacity: 0.2;
+      filter: grayscale(100%);
+      transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+      z-index: 1;
     }
     
-    /* Active State for Cards */
     .doc-card.active {
-      transform: perspective(1000px) rotateY(0deg) scale(1.05);
+      transform: translate(-50%, -50%) perspective(1000px) rotateY(0deg) scale(1);
       opacity: 1;
       filter: grayscale(0%);
-      box-shadow: 0 0 0 2px var(--hex-red-1), 0 40px 80px rgba(0, 212, 255, 0.15);
+      box-shadow: 0 0 0 2px var(--hex-red-1), 0 40px 80px rgba(0, 212, 255, 0.2);
       z-index: 10;
     }
-
-    /* Floating Badge */
+    
+    .card-header {
+      background: linear-gradient(135deg, #e8e8e8 0%, #f5f5f5 100%);
+      height: 250px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #333;
+      font-weight: bold;
+      font-size: 0.9rem;
+      position: relative;
+      border-bottom: 1px solid #ddd;
+    }
+    
     .status-badge {
-      position: absolute; top: 10px; right: 10px;
-      padding: 4px 8px; background: #000; color: #fff;
-      font-size: 10px; font-weight: bold; letter-spacing: 1px;
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      padding: 6px 12px;
+      background: #000;
+      color: #fff;
+      font-size: 10px;
+      font-weight: bold;
+      letter-spacing: 1.5px;
+      border-radius: 4px;
+    }
+    
+    .monarq-terminal {
+      background: rgba(10, 10, 10, 0.98);
+      padding: 1.5rem;
+      font-family: var(--font-code);
+      color: var(--hex-red-1);
+      font-size: 0.85rem;
+      line-height: 1.6;
+      min-height: 200px;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    
+    .terminal-line {
+      margin-bottom: 4px;
+      opacity: 0;
+      animation: fadeIn 0.4s forwards;
+    }
+    
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+    
+    .terminal-comment { color: #666; }
+    .terminal-success { color: #0f0; font-weight: bold; }
+    .terminal-warning { color: #ffa500; }
+    .terminal-info { color: var(--hex-red-1); }
+    
+    /* Counter styling */
+    #counter {
+      color: #fff;
+      font-weight: bold;
+      font-size: 1.2em;
+    }
+    
+    /* Ensure proper stacking */
+    .feature-section {
+      z-index: 1;
+    }
+    
+    .feature-section.is-active {
+      z-index: 2;
     }
   </style>
 </head>
 
-<body data-template="monarq">
-  
-  <div class="page">
-
-    <header id="site-header">
-      <div class="layout-container" id="site-header-content">
+<body data-template="home">
+  <div class="page is-ready">
+    
+    <header id="site-header" class="layout-container text-ui ui-overlay">
+      <div id="site-header-content">
         <h1 class="heading-logo header-logo">
-          <a href="/">
-            <img src="assets/images/anime-js-logo-v4.svg" alt="M0NARQ" width="580" height="118" style="filter: hue-rotate(180deg) brightness(2);" />
+          <a href="index.html">
+            <img src="assets/images/anime-js-logo-v4.svg" alt="M0NARQ logo" width="580" height="118" 
+                 style="filter: hue-rotate(180deg) brightness(1.5);" />
+            <span>M0NARQ | Document Intelligence Platform</span>
           </a>
         </h1>
         <nav id="site-menu">
           <ul>
-            <li><a class="main-nav-link" href="#intro">Vision</a></li>
-            <li><a class="main-nav-link" href="#demo">Live Demo</a></li>
+            <li><a class="main-nav-link" href="#intro" title="Vision">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon">
+                <g fill="none" fill-rule="evenodd">
+                  <path fill="#FFFFFF" fill-rule="nonzero" d="M16.167 6.125H7.833A3.375 3.375 0 0 0 4.458 9.5v5a3.375 3.375 0 0 0 3.375 3.375h8.334a3.375 3.375 0 0 0 3.375-3.375v-5a3.375 3.375 0 0 0-3.375-3.375zm-8.334 1.75h8.334c.897 0 1.625.728 1.625 1.625v5c0 .897-.728 1.625-1.625 1.625H7.833A1.625 1.625 0 0 1 6.208 14.5v-5c0-.897.728-1.625 1.625-1.625z"/>
+                </g>
+              </svg>
+              <span>Vision</span>
+            </a></li>
+            <li><a class="main-nav-link" href="#demo" title="Live Demo">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="icon">
+                <g fill="none">
+                  <path fill="currentColor" d="M10,10.0706309 L10,13.9294941 C10,14.2445758 10.2554242,14.5 10.5705059,14.5 C10.6590742,14.5 10.7464261,14.479379 10.8256439,14.4397701 L14.6845071,12.5103385 C14.9663248,12.3694297 15.0805539,12.0267421 14.9396451,11.7449245 C14.8844409,11.634516 14.7949156,11.5449908 14.6845071,11.4897865 L10.8256439,9.56035488 C10.5438263,9.41944606 10.2011387,9.53367523 10.0602299,9.81549288 C10.033824,9.86830478 10.0158571,9.92473182 10.0068132,9.9827243 L10,10.0706309 Z"/>
+                </g>
+              </svg>
+              <span>Demo</span>
+            </a></li>
           </ul>
         </nav>
       </div>
     </header>
-    
+
     <main id="home" class="layout-container">
       
-      <section id="intro" class="home-section text-layout">
-        <div class="home-section-content">
-          <div class="home-section-text">
-            <h2 class="text-xxxxl">Digital Nervous System<br>for <span style="color:var(--hex-red-1)">Bangladesh</span>.</h2>
-            <p class="text-l">Processing <span id="counter" style="color:#fff; font-weight:bold;">0</span> documents annually.</p>
+      <!-- INTRO SECTION -->
+      <section id="intro" data-chapter="intro" data-label="VISION">
+        <div class="home-section text-layout">
+          <div class="home-section-content">
+            <div class="home-section-text home-section-text-short">
+              <h2>Digital Nervous<br>System for<br><span class="animation-engine red-dot">Bangladesh</span></h2>
+              <p>Processing <span id="counter">0</span> documents annually with AI precision.</p>
+            </div>
           </div>
         </div>
+        <div class="section-spacer"></div>
       </section>
 
-      <section id="demo" class="home-section-container" style="position: relative;">
+      <!-- FEATURES GALLERY -->
+      <section id="features-gallery" data-label="CAPABILITIES">
         
-        <div class="home-section fixed-section" style="pointer-events: none;">
-          <div class="home-section-content" style="display: flex; align-items: center; justify-content: flex-end;">
-            <div style="width: 45%; position: relative; height: 400px;">
-              
-              <div id="vis-cheque" class="doc-card">
-                <div class="status-badge">BANKCORE</div>
-                <div style="height:200px; background:#eee; display:flex; align-items:center; justify-content:center; color:#333; font-weight:bold;">
-                   [ CITY BANK CHEQUE IMAGE ]
-                </div>
-                <div class="monarq-terminal" id="term-cheque" style="display:none; min-height: 150px; border-top: none;"></div>
+        <!-- BankCore Section -->
+        <section id="bankcore" class="home-section feature-section text-layout theme-color-getting-started" 
+                 data-chapter="bankcore" data-demo="bankcore">
+          <div class="home-section-content">
+            <div class="home-section-text">
+              <div class="home-section-text-heading">
+                <h2>BankCore Alpha</h2>
+                <p>PaddleOCR + Gemini Flash processing 97% accurate Bengali handwriting recognition.</p>
               </div>
-
-              <div id="vis-form" class="doc-card" style="opacity: 0;">
-                <div class="status-badge">GOVCORE</div>
-                <div style="height:300px; background:#eee; display:flex; align-items:center; justify-content:center; color:#333; font-weight:bold;">
-                   [ GOVT FORM IMAGE ]
+              <ul class="links-list">
+                <li><a class="text-ui" href="#bankcore">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon">
+                    <g fill="none" fill-rule="evenodd">
+                      <polygon fill="currentColor" fill-rule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
+                    </g>
+                  </svg>
+                  Bengali OCR Engine
+                </a></li>
+                <li><a class="text-ui" href="#bankcore">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon">
+                    <g fill="none" fill-rule="evenodd">
+                      <polygon fill="currentColor" fill-rule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
+                    </g>
+                  </svg>
+                  Signature Verification
+                </a></li>
+                <li><a class="text-ui" href="#bankcore">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon">
+                    <g fill="none" fill-rule="evenodd">
+                      <polygon fill="currentColor" fill-rule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
+                    </g>
+                  </svg>
+                  Real-time Processing
+                </a></li>
+              </ul>
+            </div>
+            <div class="feature-section-demo-wrapper">
+              <div class="feature-section-demo fixed-section">
+                <div id="vis-bankcore" class="doc-card">
+                  <div class="card-header">
+                    <div class="status-badge">BANKCORE</div>
+                    <div style="font-size: 0.75rem; text-align: center; padding: 1rem;">
+                      [ CITY BANK CHEQUE IMAGE ]<br>
+                      <span style="color: #666;">— Bengali Handwriting Detection —</span>
+                    </div>
+                  </div>
+                  <div class="monarq-terminal" id="term-bankcore"></div>
                 </div>
-                <div class="monarq-terminal" id="term-form" style="display:none; min-height: 150px; border-top: none;"></div>
               </div>
-
             </div>
           </div>
-        </div>
+        </section>
 
-        <div style="position: relative; z-index: 2;">
-          
-          <section id="step-cheque" class="home-section feature-section text-layout" data-trigger="cheque">
-            <div class="home-section-content">
-              <div class="home-section-text">
-                <h2 class="text-xxl">BankCore Alpha</h2>
-                <p>PaddleOCR + Gemini Flash processing 97% accurate Bengali handwriting.</p>
+        <!-- GovCore Section -->
+        <section id="govcore" class="home-section feature-section text-layout theme-color-animation" 
+                 data-chapter="govcore" data-demo="govcore">
+          <div class="home-section-content">
+            <div class="home-section-text">
+              <div class="home-section-text-heading">
+                <h2>GovCore Extraction</h2>
+                <p>Complex layout parsing for Deeds, NIDs, and Government Application Forms.</p>
+              </div>
+              <ul class="links-list">
+                <li><a class="text-ui" href="#govcore">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon">
+                    <g fill="none" fill-rule="evenodd">
+                      <polygon fill="currentColor" fill-rule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
+                    </g>
+                  </svg>
+                  Layout Detection
+                </a></li>
+                <li><a class="text-ui" href="#govcore">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon">
+                    <g fill="none" fill-rule="evenodd">
+                      <polygon fill="currentColor" fill-rule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
+                    </g>
+                  </svg>
+                  Field Extraction
+                </a></li>
+                <li><a class="text-ui" href="#govcore">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon">
+                    <g fill="none" fill-rule="evenodd">
+                      <polygon fill="currentColor" fill-rule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
+                    </g>
+                  </svg>
+                  KYC Validation
+                </a></li>
+              </ul>
+            </div>
+            <div class="feature-section-demo-wrapper">
+              <div class="feature-section-demo fixed-section">
+                <div id="vis-govcore" class="doc-card">
+                  <div class="card-header">
+                    <div class="status-badge">GOVCORE</div>
+                    <div style="font-size: 0.75rem; text-align: center; padding: 1rem;">
+                      [ GOVERNMENT FORM IMAGE ]<br>
+                      <span style="color: #666;">— Structured Data Extraction —</span>
+                    </div>
+                  </div>
+                  <div class="monarq-terminal" id="term-govcore"></div>
+                </div>
               </div>
             </div>
-          </section>
+          </div>
+        </section>
 
-          <section id="step-form" class="home-section feature-section text-layout" data-trigger="form">
-            <div class="home-section-content">
-              <div class="home-section-text">
-                <h2 class="text-xxl">GovCore Extraction</h2>
-                <p>Complex layout parsing for Deeds, NIDs, and Application Forms.</p>
+        <!-- LegalCore Section -->
+        <section id="legalcore" class="home-section feature-section text-layout theme-color-timeline" 
+                 data-chapter="legalcore" data-demo="legalcore">
+          <div class="home-section-content">
+            <div class="home-section-text">
+              <div class="home-section-text-heading">
+                <h2>LegalCore Intelligence</h2>
+                <p>Multi-page document analysis for Land Deeds and Property Records with clause detection.</p>
+              </div>
+              <ul class="links-list">
+                <li><a class="text-ui" href="#legalcore">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon">
+                    <g fill="none" fill-rule="evenodd">
+                      <polygon fill="currentColor" fill-rule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
+                    </g>
+                  </svg>
+                  Clause Extraction
+                </a></li>
+                <li><a class="text-ui" href="#legalcore">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon">
+                    <g fill="none" fill-rule="evenodd">
+                      <polygon fill="currentColor" fill-rule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
+                    </g>
+                  </svg>
+                  Entity Recognition
+                </a></li>
+                <li><a class="text-ui" href="#legalcore">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon">
+                    <g fill="none" fill-rule="evenodd">
+                      <polygon fill="currentColor" fill-rule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
+                    </g>
+                  </svg>
+                  Deed Verification
+                </a></li>
+              </ul>
+            </div>
+            <div class="feature-section-demo-wrapper">
+              <div class="feature-section-demo fixed-section">
+                <div id="vis-legalcore" class="doc-card">
+                  <div class="card-header">
+                    <div class="status-badge">LEGALCORE</div>
+                    <div style="font-size: 0.75rem; text-align: center; padding: 1rem;">
+                      [ LAND DEED DOCUMENT ]<br>
+                      <span style="color: #666;">— Legal Entity Analysis —</span>
+                    </div>
+                  </div>
+                  <div class="monarq-terminal" id="term-legalcore"></div>
+                </div>
               </div>
             </div>
-          </section>
-          
-          <div class="section-spacer"></div>
+          </div>
+        </section>
 
-        </div>
       </section>
+
+      <div class="section-spacer"></div>
 
     </main>
 
-    <div id="engine" style="display:none;"></div>
+    <div id="engine"></div>
+
+  </div>
+
+  <script src="assets/js/scripts.js?v=4.1.2"></script>
   
-  </div> <script src="assets/js/scripts.js?v=4.1.2"></script>
-  
-  <script src="assets/js/monarq-logic.js"></script>
+  <script>
+    window.addEventListener('load', () => {
+      console.log("M0NARQ: System Initializing...");
+
+      // Counter Animation
+      if (typeof anime !== 'undefined') {
+        const counterEl = document.getElementById('counter');
+        if (counterEl) {
+          let obj = { val: 0 };
+          anime({
+            targets: obj,
+            val: 256000000,
+            round: 1,
+            easing: 'easeOutExpo',
+            duration: 4000,
+            update: function() {
+              counterEl.innerHTML = obj.val.toLocaleString();
+            }
+          });
+        }
+      } else {
+        // Fallback vanilla JS
+        const counter = document.getElementById('counter');
+        if (counter) {
+          const target = 256000000;
+          const duration = 3000;
+          const start = Date.now();
+          
+          function update() {
+            const elapsed = Date.now() - start;
+            const progress = Math.min(elapsed / duration, 1);
+            const easeOut = 1 - Math.pow(1 - progress, 3);
+            const current = Math.floor(easeOut * target);
+            counter.textContent = current.toLocaleString();
+            
+            if (progress < 1) {
+              requestAnimationFrame(update);
+            }
+          }
+          update();
+        }
+      }
+
+      // Scroll Observer for sections
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const section = entry.target;
+            const demo = section.dataset.demo;
+            if (demo) {
+              activateDemo(demo);
+              section.classList.add('is-active');
+            }
+          } else {
+            entry.target.classList.remove('is-active');
+          }
+        });
+      }, { threshold: 0.5 });
+
+      document.querySelectorAll('[data-demo]').forEach(el => observer.observe(el));
+
+      // Demo Activation
+      let activeDemo = null;
+
+      function activateDemo(demoId) {
+        // Reset all cards
+        document.querySelectorAll('.doc-card').forEach(card => {
+          card.classList.remove('active');
+        });
+
+        // Activate current
+        const activeCard = document.getElementById(`vis-${demoId}`);
+        const activeTerm = document.getElementById(`term-${demoId}`);
+        
+        if (activeCard) {
+          activeCard.classList.add('active');
+          
+          // Run terminal animation only once
+          if (activeDemo !== demoId && activeTerm) {
+            activeTerm.innerHTML = '';
+            if (demoId === 'bankcore') runBankCoreLog(activeTerm);
+            if (demoId === 'govcore') runGovCoreLog(activeTerm);
+            if (demoId === 'legalcore') runLegalCoreLog(activeTerm);
+            activeDemo = demoId;
+          }
+        }
+      }
+
+      // Terminal Animations
+      function runBankCoreLog(el) {
+        const lines = [
+          { text: "// BANKCORE v1.0.2", cls: "terminal-comment" },
+          { text: ">> SCANNING CHEQUE...", cls: "" },
+          { text: "   [OK] PaddleOCR Init", cls: "terminal-success" },
+          { text: ">> DETECTED: Bengali Script", cls: "terminal-info" },
+          { text: "   Amount: ১,৫০,০০০ BDT", cls: "" },
+          { text: "   Payee: রহিম আহমেদ", cls: "" },
+          { text: "   Date: ২৩/১১/২০২৪", cls: "" },
+          { text: ">> VERIFYING SIGNATURE...", cls: "terminal-warning" },
+          { text: "   MATCH CONFIRMED (99.2%)", cls: "terminal-success" },
+          { text: ">> FRAUD CHECK: PASSED", cls: "terminal-success" }
+        ];
+        printLines(el, lines);
+      }
+
+      function runGovCoreLog(el) {
+        const lines = [
+          { text: "// GOVCORE v2.1.0", cls: "terminal-comment" },
+          { text: ">> IDENTIFYING LAYOUT...", cls: "" },
+          { text: "   Type: Debit Card Application", cls: "terminal-info" },
+          { text: ">> EXTRACTING FIELDS:", cls: "" },
+          { text: "   - Name: রহিম আহমেদ", cls: "" },
+          { text: "   - NID: 1234567890123", cls: "" },
+          { text: "   - Phone: +8801711234567", cls: "" },
+          { text: "   - Address: Dhaka, BD", cls: "" },
+          { text: ">> VALIDATION CHECKS:", cls: "" },
+          { text: "   [PASS] KYC Compliant", cls: "terminal-success" },
+          { text: "   [PASS] Signature Present", cls: "terminal-success" }
+        ];
+        printLines(el, lines);
+      }
+
+      function runLegalCoreLog(el) {
+        const lines = [
+          { text: "// LEGALCORE v1.5.3", cls: "terminal-comment" },
+          { text: ">> ANALYZING DEED DOCUMENT...", cls: "" },
+          { text: "   Pages: 12", cls: "terminal-info" },
+          { text: ">> EXTRACTING ENTITIES:", cls: "" },
+          { text: "   - Buyer: রহিম আহমেদ", cls: "" },
+          { text: "   - Seller: করিম মিয়া", cls: "" },
+          { text: "   - Property: Plot 45, Dhanmondi", cls: "" },
+          { text: "   - Value: 2.5 Crore BDT", cls: "" },
+          { text: ">> CLAUSE DETECTION:", cls: "" },
+          { text: "   Found 8 legal clauses", cls: "terminal-success" },
+          { text: ">> VERIFICATION: COMPLETE", cls: "terminal-success" }
+        ];
+        printLines(el, lines);
+      }
+
+      function printLines(container, lines) {
+        lines.forEach((line, i) => {
+          setTimeout(() => {
+            const div = document.createElement('div');
+            div.className = `terminal-line ${line.cls}`;
+            div.textContent = line.text;
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+          }, i * 400);
+        });
+      }
+
+      // Initialize first demo
+      setTimeout(() => activateDemo('bankcore'), 500);
+    });
+  </script>
 
 </body>
 </html>

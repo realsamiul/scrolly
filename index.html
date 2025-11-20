@@ -5,512 +5,188 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="darkreader-lock">
   <link rel="icon" href="assets/images/favicon.png">
-  <title>M0NARQ | The Nervous System of Digital Bangladesh</title>
-  
+  <title>Industrial AI Solution</title>
+  <meta name="description" content="AI-powered industrial automation for QC, energy monitoring, and predictive maintenance.">
+  <meta property="og:title" content="Industrial AI Solution">
+  <meta property="og:url" content="/">
+  <meta property="og:description" content="AI-powered industrial automation for QC, energy monitoring, and predictive maintenance.">
+  <meta property="og:image" content="/media/site/industrial-ai-sharing-image.png">
+  <meta name="twitter:title" content="Industrial AI Solution">
+  <meta name="twitter:description" content="AI-powered industrial automation for QC, energy monitoring, and predictive maintenance.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="/media/site/industrial-ai-sharing-image.png">
   <link href="assets/css/styles.css?v=4.1.2.css" rel="stylesheet">
-  
-  <style>
-    /* Override original anime.js colors with M0NARQ cyan */
-    :root {
-      --hex-red-1: #00D4FF !important;
-      --rgb-red-1: 0, 212, 255 !important;
-      --hex-red-2: #0099CC !important;
-      --hex-red-3: #0A3A4A !important;
-      --hex-red-4: #051F28 !important;
-      --hex-red-5: #0D4A5A !important;
-    }
-    
-    /* Make page visible immediately - override anime.js fade-in */
-    body[data-template=home] .page {
-      opacity: 1 !important;
-    }
-    
-    /* Fix fixed-section visibility */
-    .fixed-section {
-      opacity: 1 !important;
-      pointer-events: auto !important;
-    }
-    
-    /* Card container setup */
-    .feature-section-demo-wrapper {
-      pointer-events: auto !important;
-    }
-    
-    .doc-card {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) perspective(1000px) rotateY(-10deg) scale(0.9);
-      width: 90%;
-      max-width: 500px;
-      background: #fff;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
-      opacity: 0.2;
-      filter: grayscale(100%);
-      transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
-      z-index: 1;
-    }
-    
-    .doc-card.active {
-      transform: translate(-50%, -50%) perspective(1000px) rotateY(0deg) scale(1);
-      opacity: 1;
-      filter: grayscale(0%);
-      box-shadow: 0 0 0 2px var(--hex-red-1), 0 40px 80px rgba(0, 212, 255, 0.2);
-      z-index: 10;
-    }
-    
-    .card-header {
-      background: linear-gradient(135deg, #e8e8e8 0%, #f5f5f5 100%);
-      height: 250px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #333;
-      font-weight: bold;
-      font-size: 0.9rem;
-      position: relative;
-      border-bottom: 1px solid #ddd;
-    }
-    
-    .status-badge {
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      padding: 6px 12px;
-      background: #000;
-      color: #fff;
-      font-size: 10px;
-      font-weight: bold;
-      letter-spacing: 1.5px;
-      border-radius: 4px;
-    }
-    
-    .monarq-terminal {
-      background: rgba(10, 10, 10, 0.98);
-      padding: 1.5rem;
-      font-family: var(--font-code);
-      color: var(--hex-red-1);
-      font-size: 0.85rem;
-      line-height: 1.6;
-      min-height: 200px;
-      max-height: 300px;
-      overflow-y: auto;
-    }
-    
-    .terminal-line {
-      margin-bottom: 4px;
-      opacity: 0;
-      animation: fadeIn 0.4s forwards;
-    }
-    
-    @keyframes fadeIn {
-      to { opacity: 1; }
-    }
-    
-    .terminal-comment { color: #666; }
-    .terminal-success { color: #0f0; font-weight: bold; }
-    .terminal-warning { color: #ffa500; }
-    .terminal-info { color: var(--hex-red-1); }
-    
-    /* Counter styling */
-    #counter {
-      color: #fff;
-      font-weight: bold;
-      font-size: 1.2em;
-    }
-    
-    /* Ensure proper stacking */
-    .feature-section {
-      z-index: 1;
-    }
-    
-    .feature-section.is-active {
-      z-index: 2;
-    }
-  </style>
 </head>
-
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-16LTPBS8QC"></script>
+<script>
+  window.paths = {
+    demos: '/documentation-demos',
+    'easings': '/assets/json/easings.json',
+    'github-sponsors': '/github-sponsors',
+    'platinum-sponsors': '/platinum-sponsors',
+    'gold-sponsors': '/gold-sponsors',
+    'silver-sponsors': '/silver-sponsors',
+  };
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-16LTPBS8QC');
+</script>
 <body data-template="home">
-  <div class="page is-ready">
-    
+  <div class="page">
     <header id="site-header" class="layout-container text-ui ui-overlay">
       <div id="site-header-content">
         <h1 class="heading-logo header-logo">
           <a href="index.html">
-            <img src="assets/images/anime-js-logo-v4.svg" alt="M0NARQ logo" width="580" height="118" 
-                 style="filter: hue-rotate(180deg) brightness(1.5);" />
-            <span>M0NARQ | Document Intelligence Platform</span>
+            <img src="assets/images/industrial-ai-logo.svg" alt="Industrial AI logo" width="580" height="118" />
+            <span>Industrial AI Automation</span>
           </a>
         </h1>
         <nav id="site-menu">
           <ul>
-            <li><a class="main-nav-link" href="#intro" title="Vision">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon">
-                <g fill="none" fill-rule="evenodd">
-                  <path fill="#FFFFFF" fill-rule="nonzero" d="M16.167 6.125H7.833A3.375 3.375 0 0 0 4.458 9.5v5a3.375 3.375 0 0 0 3.375 3.375h8.334a3.375 3.375 0 0 0 3.375-3.375v-5a3.375 3.375 0 0 0-3.375-3.375zm-8.334 1.75h8.334c.897 0 1.625.728 1.625 1.625v5c0 .897-.728 1.625-1.625 1.625H7.833A1.625 1.625 0 0 1 6.208 14.5v-5c0-.897.728-1.625 1.625-1.625z"/>
-                </g>
-              </svg>
-              <span>Vision</span>
-            </a></li>
-            <li><a class="main-nav-link" href="#demo" title="Live Demo">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="icon">
-                <g fill="none">
-                  <path fill="currentColor" d="M10,10.0706309 L10,13.9294941 C10,14.2445758 10.2554242,14.5 10.5705059,14.5 C10.6590742,14.5 10.7464261,14.479379 10.8256439,14.4397701 L14.6845071,12.5103385 C14.9663248,12.3694297 15.0805539,12.0267421 14.9396451,11.7449245 C14.8844409,11.634516 14.7949156,11.5449908 14.6845071,11.4897865 L10.8256439,9.56035488 C10.5438263,9.41944606 10.2011387,9.53367523 10.0602299,9.81549288 C10.033824,9.86830478 10.0158571,9.92473182 10.0068132,9.9827243 L10,10.0706309 Z"/>
-                </g>
-              </svg>
-              <span>Demo</span>
-            </a></li>
+            <li><a class="main-nav-link docs-link" data-id="docs" href="/documentation" title="Documentation">Docs</a></li>
+            <li><a class="main-nav-link" href="learn.html" title="Learn">Learn</a></li>
+            <li><a class="main-nav-link" href="https://github.com/sponsors/your-company" target="_blank" title="GitHub">GitHub</a></li>
           </ul>
         </nav>
       </div>
     </header>
-
     <main id="home" class="layout-container">
-      
-      <!-- INTRO SECTION -->
-      <section id="intro" data-chapter="intro" data-label="VISION">
+      <!-- Hero Section -->
+      <section id="intro" data-chapter="intro" data-label="HEADING">
         <div class="home-section text-layout">
           <div class="home-section-content">
             <div class="home-section-text home-section-text-short">
-              <h2>Digital Nervous<br>System for<br><span class="animation-engine red-dot">Bangladesh</span></h2>
-              <p>Processing <span id="counter">0</span> documents annually with AI precision.</p>
+              <h2>AI-Driven Industrial Automation<span class="animation-engine red-dot">.</span></h2>
+              <p>Maximize efficiency with AI-powered <span class="animate-anything-wrapper"><span class="animate-anything">QC, energy monitoring, and predictive maintenance</span><span class="animate-anything-dot">.</span></span></p>
             </div>
           </div>
         </div>
         <div class="section-spacer"></div>
       </section>
 
-      <!-- FEATURES GALLERY -->
-      <section id="features-gallery" data-label="CAPABILITIES">
-        
-        <!-- BankCore Section -->
-        <section id="bankcore" class="home-section feature-section text-layout theme-color-getting-started" 
-                 data-chapter="bankcore" data-demo="bankcore">
+      <!-- How It Works Section -->
+      <section id="how-it-works" data-chapter="how-it-works">
+        <div class="home-section fixed-section">
           <div class="home-section-content">
-            <div class="home-section-text">
-              <div class="home-section-text-heading">
-                <h2>BankCore Alpha</h2>
-                <p>PaddleOCR + Gemini Flash processing 97% accurate Bengali handwriting recognition.</p>
-              </div>
-              <ul class="links-list">
-                <li><a class="text-ui" href="#bankcore">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon">
-                    <g fill="none" fill-rule="evenodd">
-                      <polygon fill="currentColor" fill-rule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
-                    </g>
-                  </svg>
-                  Bengali OCR Engine
-                </a></li>
-                <li><a class="text-ui" href="#bankcore">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon">
-                    <g fill="none" fill-rule="evenodd">
-                      <polygon fill="currentColor" fill-rule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
-                    </g>
-                  </svg>
-                  Signature Verification
-                </a></li>
-                <li><a class="text-ui" href="#bankcore">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon">
-                    <g fill="none" fill-rule="evenodd">
-                      <polygon fill="currentColor" fill-rule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
-                    </g>
-                  </svg>
-                  Real-time Processing
-                </a></li>
-              </ul>
+            <div class="home-section-text text-layout home-section-text-short">
+              <h2 class="section-heading">How It Works</h2>
+              <p>A simple 3-step process to optimize your factory.</p>
             </div>
-            <div class="feature-section-demo-wrapper">
-              <div class="feature-section-demo fixed-section">
-                <div id="vis-bankcore" class="doc-card">
-                  <div class="card-header">
-                    <div class="status-badge">BANKCORE</div>
-                    <div style="font-size: 0.75rem; text-align: center; padding: 1rem;">
-                      [ CITY BANK CHEQUE IMAGE ]<br>
-                      <span style="color: #666;">— Bengali Handwriting Detection —</span>
-                    </div>
-                  </div>
-                  <div class="monarq-terminal" id="term-bankcore"></div>
-                </div>
+            <div class="steps">
+              <div class="step" data-aos="fade-up" data-delay="0.2">
+                <h3>Step 1: Install Sensors</h3>
+                <p>Mount the sensors on key machines and set up your device.</p>
+              </div>
+              <div class="step" data-aos="fade-up" data-delay="0.4">
+                <h3>Step 2: Scan QR & Install</h3>
+                <p>Scan the QR code to install the app on your phone or tablet.</p>
+              </div>
+              <div class="step" data-aos="fade-up" data-delay="0.6">
+                <h3>Step 3: Live Monitoring</h3>
+                <p>Monitor your factory’s data in real-time and receive notifications.</p>
               </div>
             </div>
           </div>
-        </section>
-
-        <!-- GovCore Section -->
-        <section id="govcore" class="home-section feature-section text-layout theme-color-animation" 
-                 data-chapter="govcore" data-demo="govcore">
-          <div class="home-section-content">
-            <div class="home-section-text">
-              <div class="home-section-text-heading">
-                <h2>GovCore Extraction</h2>
-                <p>Complex layout parsing for Deeds, NIDs, and Government Application Forms.</p>
-              </div>
-              <ul class="links-list">
-                <li><a class="text-ui" href="#govcore">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon">
-                    <g fill="none" fill-rule="evenodd">
-                      <polygon fill="currentColor" fill-rule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
-                    </g>
-                  </svg>
-                  Layout Detection
-                </a></li>
-                <li><a class="text-ui" href="#govcore">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon">
-                    <g fill="none" fill-rule="evenodd">
-                      <polygon fill="currentColor" fill-rule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
-                    </g>
-                  </svg>
-                  Field Extraction
-                </a></li>
-                <li><a class="text-ui" href="#govcore">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon">
-                    <g fill="none" fill-rule="evenodd">
-                      <polygon fill="currentColor" fill-rule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
-                    </g>
-                  </svg>
-                  KYC Validation
-                </a></li>
-              </ul>
-            </div>
-            <div class="feature-section-demo-wrapper">
-              <div class="feature-section-demo fixed-section">
-                <div id="vis-govcore" class="doc-card">
-                  <div class="card-header">
-                    <div class="status-badge">GOVCORE</div>
-                    <div style="font-size: 0.75rem; text-align: center; padding: 1rem;">
-                      [ GOVERNMENT FORM IMAGE ]<br>
-                      <span style="color: #666;">— Structured Data Extraction —</span>
-                    </div>
-                  </div>
-                  <div class="monarq-terminal" id="term-govcore"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- LegalCore Section -->
-        <section id="legalcore" class="home-section feature-section text-layout theme-color-timeline" 
-                 data-chapter="legalcore" data-demo="legalcore">
-          <div class="home-section-content">
-            <div class="home-section-text">
-              <div class="home-section-text-heading">
-                <h2>LegalCore Intelligence</h2>
-                <p>Multi-page document analysis for Land Deeds and Property Records with clause detection.</p>
-              </div>
-              <ul class="links-list">
-                <li><a class="text-ui" href="#legalcore">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon">
-                    <g fill="none" fill-rule="evenodd">
-                      <polygon fill="currentColor" fill-rule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
-                    </g>
-                  </svg>
-                  Clause Extraction
-                </a></li>
-                <li><a class="text-ui" href="#legalcore">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon">
-                    <g fill="none" fill-rule="evenodd">
-                      <polygon fill="currentColor" fill-rule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
-                    </g>
-                  </svg>
-                  Entity Recognition
-                </a></li>
-                <li><a class="text-ui" href="#legalcore">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon">
-                    <g fill="none" fill-rule="evenodd">
-                      <polygon fill="currentColor" fill-rule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
-                    </g>
-                  </svg>
-                  Deed Verification
-                </a></li>
-              </ul>
-            </div>
-            <div class="feature-section-demo-wrapper">
-              <div class="feature-section-demo fixed-section">
-                <div id="vis-legalcore" class="doc-card">
-                  <div class="card-header">
-                    <div class="status-badge">LEGALCORE</div>
-                    <div style="font-size: 0.75rem; text-align: center; padding: 1rem;">
-                      [ LAND DEED DOCUMENT ]<br>
-                      <span style="color: #666;">— Legal Entity Analysis —</span>
-                    </div>
-                  </div>
-                  <div class="monarq-terminal" id="term-legalcore"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
+        </div>
       </section>
 
-      <div class="section-spacer"></div>
+      <!-- Key Features Section -->
+      <section id="key-features">
+        <div class="home-section fixed-section">
+          <div class="home-section-content">
+            <div class="home-section-text text-layout">
+              <h2 class="section-heading">Key Features</h2>
+              <p>Empowering industries with cutting-edge AI technology.</p>
+            </div>
+            <div class="features">
+              <div class="feature">
+                <h3>QC Vision</h3>
+                <p>Detect fabric defects in real-time using AI-powered vision systems.</p>
+              </div>
+              <div class="feature">
+                <h3>PowerGuard</h3>
+                <p>Optimize energy consumption by detecting power usage anomalies.</p>
+              </div>
+              <div class="feature">
+                <h3>FailPredict</h3>
+                <p>Predict machine failures 5 hours in advance using vibration analysis.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
+      <!-- Competitive Advantage Section -->
+      <section id="competitive-advantage">
+        <div class="home-section fixed-section">
+          <div class="home-section-content">
+            <div class="home-section-text text-layout">
+              <h2 class="section-heading">Why Choose Us?</h2>
+              <p>Learn how we outshine traditional solutions in the industrial automation space.</p>
+            </div>
+            <div class="comparison">
+              <div class="comparison-column">
+                <h3>Traditional AOI Systems</h3>
+                <ul>
+                  <li>Expensive hardware</li>
+                  <li>Cloud-dependent</li>
+                  <li>Limited real-time feedback</li>
+                </ul>
+              </div>
+              <div class="comparison-column">
+                <h3>Industrial-AI.One</h3>
+                <ul>
+                  <li>Software-only, runs on existing hardware</li>
+                  <li>On-prem processing, no cloud fees</li>
+                  <li>Real-time QC, energy monitoring, and predictive maintenance</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Case Studies Section -->
+      <section id="case-studies">
+        <div class="home-section fixed-section">
+          <div class="home-section-content">
+            <div class="home-section-text text-layout">
+              <h2 class="section-heading">Success Stories</h2>
+              <p>Our solution has been proven to deliver outstanding results in real-world scenarios.</p>
+            </div>
+            <div class="case-study">
+              <h3>Gazipur Factory</h3>
+              <p>Reduced defects from 4.7% to 2.9%, saving over USD 42,000 in the first month.</p>
+            </div>
+            <div class="case-study">
+              <h3>Narayanganj Line</h3>
+              <p>Reduced downtime by 14 hours/month, leading to significant operational savings.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Call to Action Section -->
+      <section id="cta">
+        <div class="home-section fixed-section">
+          <div class="home-section-content">
+            <div class="home-section-text text-layout">
+              <h2 class="section-heading">Get Started Today</h2>
+              <p>Transform your factory with AI. Schedule a demo and learn how we can help.</p>
+              <a href="#contact-form" class="cta-button">Schedule a Demo</a>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
 
-    <div id="engine"></div>
-
+    <!-- Footer -->
+    <footer id="site-footer">
+      <p>&copy; 2025 Industrial-AI.One. All rights reserved.</p>
+    </footer>
   </div>
 
-  <script src="assets/js/scripts.js?v=4.1.2"></script>
-  
-  <script>
-    window.addEventListener('load', () => {
-      console.log("M0NARQ: System Initializing...");
-
-      // Counter Animation
-      if (typeof anime !== 'undefined') {
-        const counterEl = document.getElementById('counter');
-        if (counterEl) {
-          let obj = { val: 0 };
-          anime({
-            targets: obj,
-            val: 256000000,
-            round: 1,
-            easing: 'easeOutExpo',
-            duration: 4000,
-            update: function() {
-              counterEl.innerHTML = obj.val.toLocaleString();
-            }
-          });
-        }
-      } else {
-        // Fallback vanilla JS
-        const counter = document.getElementById('counter');
-        if (counter) {
-          const target = 256000000;
-          const duration = 3000;
-          const start = Date.now();
-          
-          function update() {
-            const elapsed = Date.now() - start;
-            const progress = Math.min(elapsed / duration, 1);
-            const easeOut = 1 - Math.pow(1 - progress, 3);
-            const current = Math.floor(easeOut * target);
-            counter.textContent = current.toLocaleString();
-            
-            if (progress < 1) {
-              requestAnimationFrame(update);
-            }
-          }
-          update();
-        }
-      }
-
-      // Scroll Observer for sections
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const section = entry.target;
-            const demo = section.dataset.demo;
-            if (demo) {
-              activateDemo(demo);
-              section.classList.add('is-active');
-            }
-          } else {
-            entry.target.classList.remove('is-active');
-          }
-        });
-      }, { threshold: 0.5 });
-
-      document.querySelectorAll('[data-demo]').forEach(el => observer.observe(el));
-
-      // Demo Activation
-      let activeDemo = null;
-
-      function activateDemo(demoId) {
-        // Reset all cards
-        document.querySelectorAll('.doc-card').forEach(card => {
-          card.classList.remove('active');
-        });
-
-        // Activate current
-        const activeCard = document.getElementById(`vis-${demoId}`);
-        const activeTerm = document.getElementById(`term-${demoId}`);
-        
-        if (activeCard) {
-          activeCard.classList.add('active');
-          
-          // Run terminal animation only once
-          if (activeDemo !== demoId && activeTerm) {
-            activeTerm.innerHTML = '';
-            if (demoId === 'bankcore') runBankCoreLog(activeTerm);
-            if (demoId === 'govcore') runGovCoreLog(activeTerm);
-            if (demoId === 'legalcore') runLegalCoreLog(activeTerm);
-            activeDemo = demoId;
-          }
-        }
-      }
-
-      // Terminal Animations
-      function runBankCoreLog(el) {
-        const lines = [
-          { text: "// BANKCORE v1.0.2", cls: "terminal-comment" },
-          { text: ">> SCANNING CHEQUE...", cls: "" },
-          { text: "   [OK] PaddleOCR Init", cls: "terminal-success" },
-          { text: ">> DETECTED: Bengali Script", cls: "terminal-info" },
-          { text: "   Amount: ১,৫০,০০০ BDT", cls: "" },
-          { text: "   Payee: রহিম আহমেদ", cls: "" },
-          { text: "   Date: ২৩/১১/২০২৪", cls: "" },
-          { text: ">> VERIFYING SIGNATURE...", cls: "terminal-warning" },
-          { text: "   MATCH CONFIRMED (99.2%)", cls: "terminal-success" },
-          { text: ">> FRAUD CHECK: PASSED", cls: "terminal-success" }
-        ];
-        printLines(el, lines);
-      }
-
-      function runGovCoreLog(el) {
-        const lines = [
-          { text: "// GOVCORE v2.1.0", cls: "terminal-comment" },
-          { text: ">> IDENTIFYING LAYOUT...", cls: "" },
-          { text: "   Type: Debit Card Application", cls: "terminal-info" },
-          { text: ">> EXTRACTING FIELDS:", cls: "" },
-          { text: "   - Name: রহিম আহমেদ", cls: "" },
-          { text: "   - NID: 1234567890123", cls: "" },
-          { text: "   - Phone: +8801711234567", cls: "" },
-          { text: "   - Address: Dhaka, BD", cls: "" },
-          { text: ">> VALIDATION CHECKS:", cls: "" },
-          { text: "   [PASS] KYC Compliant", cls: "terminal-success" },
-          { text: "   [PASS] Signature Present", cls: "terminal-success" }
-        ];
-        printLines(el, lines);
-      }
-
-      function runLegalCoreLog(el) {
-        const lines = [
-          { text: "// LEGALCORE v1.5.3", cls: "terminal-comment" },
-          { text: ">> ANALYZING DEED DOCUMENT...", cls: "" },
-          { text: "   Pages: 12", cls: "terminal-info" },
-          { text: ">> EXTRACTING ENTITIES:", cls: "" },
-          { text: "   - Buyer: রহিম আহমেদ", cls: "" },
-          { text: "   - Seller: করিম মিয়া", cls: "" },
-          { text: "   - Property: Plot 45, Dhanmondi", cls: "" },
-          { text: "   - Value: 2.5 Crore BDT", cls: "" },
-          { text: ">> CLAUSE DETECTION:", cls: "" },
-          { text: "   Found 8 legal clauses", cls: "terminal-success" },
-          { text: ">> VERIFICATION: COMPLETE", cls: "terminal-success" }
-        ];
-        printLines(el, lines);
-      }
-
-      function printLines(container, lines) {
-        lines.forEach((line, i) => {
-          setTimeout(() => {
-            const div = document.createElement('div');
-            div.className = `terminal-line ${line.cls}`;
-            div.textContent = line.text;
-            container.appendChild(div);
-            container.scrollTop = container.scrollHeight;
-          }, i * 400);
-        });
-      }
-
-      // Initialize first demo
-      setTimeout(() => activateDemo('bankcore'), 500);
-    });
-  </script>
-
+  <script src="assets/js/scripts.js"></script>
 </body>
 </html>

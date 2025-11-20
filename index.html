@@ -9,20 +9,18 @@
 
   <style>
     :root {
-      --hex-red-1: #00D4FF; /* Electric Cyan */
+      --hex-red-1: #00D4FF; /* Cyan Accent */
       --hex-bg-1: #050505;  /* Deep Black */
       --font-code: 'Courier New', monospace;
     }
     
-    /* Ensure sticky sections work with the original layout engine */
-    body[data-template="monarq"] .home-section {
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+    /* Fix layout inside the .page wrapper */
+    .page {
+      width: 100%;
+      overflow-x: hidden;
     }
 
-    /* Terminal Window */
+    /* Terminal Window Styling */
     .monarq-terminal {
       background: rgba(10, 10, 10, 0.95);
       border: 1px solid #333;
@@ -35,9 +33,10 @@
       white-space: pre-wrap;
       font-size: 0.85rem;
       position: relative;
+      margin-top: 1.5rem;
     }
     
-    /* Document Card */
+    /* Card 3D Effect */
     .doc-card {
       background: #fff;
       border-radius: 8px;
@@ -47,15 +46,20 @@
       opacity: 0.4;
       filter: grayscale(100%);
       box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+      position: absolute;
+      top: 0; left: 0; width: 100%;
     }
+    
+    /* Active State for Cards */
     .doc-card.active {
       transform: perspective(1000px) rotateY(0deg) scale(1.05);
       opacity: 1;
       filter: grayscale(0%);
       box-shadow: 0 0 0 2px var(--hex-red-1), 0 40px 80px rgba(0, 212, 255, 0.15);
+      z-index: 10;
     }
 
-    /* Badge */
+    /* Floating Badge */
     .status-badge {
       position: absolute; top: 10px; right: 10px;
       padding: 4px 8px; background: #000; color: #fff;
@@ -66,79 +70,91 @@
 
 <body data-template="monarq">
   
-  <header id="site-header">
-    <div class="layout-container" id="site-header-content">
-      <h1 class="heading-logo">
-        <a href="/"><span style="font-weight:900; font-size:1.5rem;">M0NARQ</span></a>
-      </h1>
-      <nav id="site-menu">
-        <ul>
-          <li><a class="main-nav-link" href="#intro">Vision</a></li>
-          <li><a class="main-nav-link" href="#demo">Live Demo</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
-  
-  <main id="home" class="layout-container">
+  <div class="page">
+
+    <header id="site-header">
+      <div class="layout-container" id="site-header-content">
+        <h1 class="heading-logo header-logo">
+          <a href="/">
+            <img src="assets/images/anime-js-logo-v4.svg" alt="M0NARQ" width="580" height="118" style="filter: hue-rotate(180deg) brightness(2);" />
+          </a>
+        </h1>
+        <nav id="site-menu">
+          <ul>
+            <li><a class="main-nav-link" href="#intro">Vision</a></li>
+            <li><a class="main-nav-link" href="#demo">Live Demo</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
     
-    <section id="intro" class="home-section text-layout">
-      <div class="home-section-content">
-        <div class="home-section-text">
-          <h2 class="text-xxxxl">Digital Nervous System<br>for <span style="color:var(--hex-red-1)">Bangladesh</span></h2>
-          <p>Processing <span id="counter">0</span> documents annually.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="demo" class="home-section-container" style="position: relative;">
+    <main id="home" class="layout-container">
       
-      <div class="home-section fixed-section" style="pointer-events: none;">
-        <div class="home-section-content" style="display: flex; align-items: center; justify-content: flex-end;">
-          <div style="width: 45%; position: relative;">
-            
-            <div id="vis-cheque" class="doc-card" style="position: absolute; width: 100%;">
-              <div class="status-badge">BANKCORE</div>
-              <img src="https://placehold.co/600x300/111/FFF?text=Cheque+Scanning..." style="width:100%">
-              <div class="monarq-terminal" id="term-cheque" style="display:none; margin-top:1rem;"></div>
-            </div>
-
-            <div id="vis-form" class="doc-card" style="position: absolute; width: 100%; opacity: 0;">
-              <div class="status-badge">GOVCORE</div>
-              <img src="https://placehold.co/500x700/111/FFF?text=Form+Extraction..." style="width:100%">
-              <div class="monarq-terminal" id="term-form" style="display:none; margin-top:1rem;"></div>
-            </div>
-
+      <section id="intro" class="home-section text-layout">
+        <div class="home-section-content">
+          <div class="home-section-text">
+            <h2 class="text-xxxxl">Digital Nervous System<br>for <span style="color:var(--hex-red-1)">Bangladesh</span>.</h2>
+            <p class="text-l">Processing <span id="counter" style="color:#fff; font-weight:bold;">0</span> documents annually.</p>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div style="position: relative; z-index: 2;">
+      <section id="demo" class="home-section-container" style="position: relative;">
         
-        <section id="step-cheque" class="home-section feature-section text-layout" data-trigger="cheque">
-          <div class="home-section-content">
-            <div class="home-section-text">
-              <h2>BankCore Alpha</h2>
-              <p>PaddleOCR + Gemini Flash processing 97% accurate Bengali handwriting.</p>
+        <div class="home-section fixed-section" style="pointer-events: none;">
+          <div class="home-section-content" style="display: flex; align-items: center; justify-content: flex-end;">
+            <div style="width: 45%; position: relative; height: 400px;">
+              
+              <div id="vis-cheque" class="doc-card">
+                <div class="status-badge">BANKCORE</div>
+                <div style="height:200px; background:#eee; display:flex; align-items:center; justify-content:center; color:#333; font-weight:bold;">
+                   [ CITY BANK CHEQUE IMAGE ]
+                </div>
+                <div class="monarq-terminal" id="term-cheque" style="display:none; min-height: 150px; border-top: none;"></div>
+              </div>
+
+              <div id="vis-form" class="doc-card" style="opacity: 0;">
+                <div class="status-badge">GOVCORE</div>
+                <div style="height:300px; background:#eee; display:flex; align-items:center; justify-content:center; color:#333; font-weight:bold;">
+                   [ GOVT FORM IMAGE ]
+                </div>
+                <div class="monarq-terminal" id="term-form" style="display:none; min-height: 150px; border-top: none;"></div>
+              </div>
+
             </div>
           </div>
-        </section>
+        </div>
 
-        <section id="step-form" class="home-section feature-section text-layout" data-trigger="form">
-          <div class="home-section-content">
-            <div class="home-section-text">
-              <h2>GovCore Extraction</h2>
-              <p>Complex layout parsing for Deeds, NIDs, and Application Forms.</p>
+        <div style="position: relative; z-index: 2;">
+          
+          <section id="step-cheque" class="home-section feature-section text-layout" data-trigger="cheque">
+            <div class="home-section-content">
+              <div class="home-section-text">
+                <h2 class="text-xxl">BankCore Alpha</h2>
+                <p>PaddleOCR + Gemini Flash processing 97% accurate Bengali handwriting.</p>
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
 
-      </div>
-    </section>
+          <section id="step-form" class="home-section feature-section text-layout" data-trigger="form">
+            <div class="home-section-content">
+              <div class="home-section-text">
+                <h2 class="text-xxl">GovCore Extraction</h2>
+                <p>Complex layout parsing for Deeds, NIDs, and Application Forms.</p>
+              </div>
+            </div>
+          </section>
+          
+          <div class="section-spacer"></div>
 
-  </main>
+        </div>
+      </section>
 
-  <script src="assets/js/scripts.js?v=4.1.2"></script>
+    </main>
+
+    <div id="engine" style="display:none;"></div>
+  
+  </div> <script src="assets/js/scripts.js?v=4.1.2"></script>
   
   <script src="assets/js/monarq-logic.js"></script>
 

@@ -1,6 +1,22 @@
 <!DOCTYPE html><html dir="ltr" lang="en" class="has-hover not-ready js with-cookie-consent"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Madar | Unified Logistics Platform</title><link rel="preconnect" href="https://storage.googleapis.com" crossorigin=""><link rel="preconnect" href="https://www.googletagmanager.com/" crossorigin=""><link rel="preconnect" href="//js-eu1.hs-scripts.com/" crossorigin=""><link rel="preconnect" href="https://analytics.ahrefs.com/" crossorigin=""><link rel="preload" href="/assets/fonts/SuisseIntl-Regular.woff2" as="font" type="font/woff2" crossorigin=""><link rel="preload" href="/assets/fonts/SuisseIntl-Light.woff2" as="font" type="font/woff2" crossorigin=""><style>body { background: #172E64; color: #172E64; }
                 a { color: #172E64; }
-                .js.not-ready, .js.not-ready * { transition: none !important; }</style><link rel="stylesheet" href="../../madarplatform.com/assets/stylesheets/global_bqyar.css"><link rel="stylesheet" href="../../madarplatform.com/assets/stylesheets/landing_bqyar.css"><script>document.documentElement.classList.remove('no-js');
+                .js.not-ready, .js.not-ready * { transition: none !important; }</style><link rel="stylesheet" href="../../madarplatform.com/assets/stylesheets/global_bqyar.css"><link rel="stylesheet" href="../../madarplatform.com/assets/stylesheets/landing_bqyar.css">
+   <style>
+        /* FORCE HIDE PRELOADER */
+        .preloader { 
+            display: none !important;
+            pointer-events: none !important;
+            opacity: 0 !important;
+            z-index: -9999 !important;
+        }
+        
+        /* FORCE SHOW CONTENT */
+        html.not-ready, body {
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+    </style>
+  <script>document.documentElement.classList.remove('no-js');
             document.documentElement.classList.add('js');
 
             if (navigator.platform.toUpperCase().indexOf('WIN') >= 0) {
